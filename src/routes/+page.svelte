@@ -1,4 +1,32 @@
 <script>
+  /**
+     * @type {string}
+     */
+  var sessionUsername
+
+  /**
+   * @type {string}
+   */
+  var sessionPassword
+
+  async function SessionLogin() {
+    var response;
+    try{
+      response = await fetch('http://localhost:8000/api/loginSession', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  "username" : sessionUsername,
+                  "password" : sessionPassword
+                })
+            });
+    }catch(e){
+      window.alert("Username or password is wrong");
+    }
+    console.log(response);
+  }
+
 </script>
 
   <div class="container-fluid">
@@ -10,26 +38,26 @@
         <form class="form-session">
           <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
           <div class="formItem">
-            <label for="inputUsername" class="sr-only">Username</label>
-            <input type="username" id="inputUsername" class="form-control" placeholder="Username">
+            <label for="inputSessionUsername" class="sr-only">Username</label>
+            <input bind:value={sessionUsername} type="username" id="inputSessionUsername" class="form-control" placeholder="Username">
           </div>
           <div class="formItem">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password">
+            <label for="inputSessionPassword" class="sr-only">Password</label>
+            <input bind:value={sessionPassword} type="password" id="inputSessionPassword" class="form-control" placeholder="Password">
           </div>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Login as Session</button>
+          <button class="btn btn-lg btn-primary btn-block" type="button" on:click={SessionLogin}>Login as Session</button>
         </form>
       </div>
       <div class="loginForm">
         <form class="form-jwt">
           <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
           <div class="formItem">
-            <label for="inputUsername" class="sr-only">Username</label>
-            <input type="username" id="inputUsername" class="form-control" placeholder="Username">
+            <label for="inputJWTUsername" class="sr-only">Username</label>
+            <input type="username" id="inputJWTUsername" class="form-control" placeholder="Username">
           </div>
           <div class="formItem">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password">
+            <label for="inputJWTPassword" class="sr-only">Password</label>
+            <input type="password" id="inputJWTPassword" class="form-control" placeholder="Password">
           </div>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Login with JWT</button>
         </form>

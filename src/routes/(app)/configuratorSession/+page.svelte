@@ -46,7 +46,7 @@
             });
             const data = await response.json();
             character = data;
-            // console.log('Character GET:',character);
+            console.log('Character GET:',character);
         }
         catch (e) {
             console.log(e);
