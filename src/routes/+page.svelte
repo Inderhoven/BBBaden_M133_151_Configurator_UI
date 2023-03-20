@@ -1,4 +1,5 @@
 <script>
+  import { goto } from '$app/navigation'
   /**
      * @type {string}
      */
@@ -16,15 +17,21 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({
                   "username" : sessionUsername,
                   "password" : sessionPassword
                 })
             });
     }catch(e){
-      window.alert("Username or password is wrong");
+      window.alert(e);
     }
-    console.log(response);
+    if (response?.ok){
+      goto('/configuratorSession');
+    }
+    else {
+      window.alert("Username or password is invalid");
+    }
   }
 
 </script>
