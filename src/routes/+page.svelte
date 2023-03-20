@@ -34,6 +34,40 @@
     }
   }
 
+  /**
+   * @type {string}
+   */
+  var jwtUsername
+
+  /**
+   * @type {string}
+   */
+  var jwtPassword
+
+  async function JWTLogin() {
+    var response;
+    try{
+      response = await fetch('http://localhost:8000/api/loginJWT', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                  "username" : jwtUsername,
+                  "password" : jwtPassword
+                })
+            });
+    }catch(e){
+      window.alert(e);
+    }
+    if (response?.ok){
+      goto('/configuratorJWT');
+    }
+    else {
+      window.alert("Username or password is invalid");
+    }
+  }
+
 </script>
 
   <div class="container-fluid">
@@ -60,14 +94,14 @@
           <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
           <div class="formItem">
             <label for="inputJWTUsername" class="sr-only">Username</label>
-            <input type="username" id="inputJWTUsername" class="form-control" placeholder="Username">
+            <input bind:value={jwtUsername} type="username" id="inputJWTUsername" class="form-control" placeholder="Username">
           </div>
           <div class="formItem">
             <label for="inputJWTPassword" class="sr-only">Password</label>
-            <input type="password" id="inputJWTPassword" class="form-control" placeholder="Password">
+            <input bind:value={jwtPassword} type="password" id="inputJWTPassword" class="form-control" placeholder="Password">
           </div>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Login with JWT</button>
-        </form>
+          <button class="btn btn-lg btn-primary btn-block" type="button" on:click={JWTLogin}>Login with JWT</button>
+        </form> 
       </div>
     </div>
   </div>
