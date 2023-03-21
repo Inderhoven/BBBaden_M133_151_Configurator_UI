@@ -19,6 +19,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"cookie": "^0.5.0",
 		"jsonwebtoken": "^9.0.0",
 		"svelte-steps": "^2.4.1"
 	}

@@ -1,8 +1,28 @@
 <script>
   import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
 
   async function logout() {
+    var path = $page.url.pathname;
+    
+    if(path === '/configuratorJWT'){
+      logoutJWT();
+    }
+    else {
+      logoutSession();
+    }
+  }
+
+  async function logoutSession() {
     await fetch('http://localhost:8000/api/logoutSession', {
+      method: 'POST',
+      credentials: 'include'
+    });
+    goto('/');
+  }
+
+  async function logoutJWT() {
+    await fetch('http://localhost:8000/authenticate/logout', {
       method: 'POST',
       credentials: 'include'
     });

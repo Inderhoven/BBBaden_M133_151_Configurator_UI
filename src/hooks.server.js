@@ -5,9 +5,9 @@ import { redirect } from '@sveltejs/kit';
 // @ts-ignore
 export const handle = async ({event, resolve}) => {
 
-    const access = event.cookies.get('sessionid');
-
-    if(!access && event.route.id?.startsWith('/(app)')) {
+    const accessSession = event.cookies.get('sessionid');
+    const accessJWT = event.cookies.get('jwt');
+    if((!accessSession || !accessJWT) && event.route.id?.startsWith('/(app)')) {
         throw redirect(302, '/');
     }
 

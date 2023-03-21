@@ -47,7 +47,7 @@
   async function JWTLogin() {
     var response;
     try{
-      response = await fetch('http://localhost:8000/api/loginJWT', {
+      response = await fetch('http://localhost:8000/authenticate/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json' },

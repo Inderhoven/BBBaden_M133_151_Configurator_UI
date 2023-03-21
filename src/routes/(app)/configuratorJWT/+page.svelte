@@ -2,6 +2,7 @@
 
     import { Steps } from 'svelte-steps';
     import { onMount } from 'svelte';
+    import cookie from 'cookie';
 
     import Gender from '../../templates/configuratorShares/gender.svelte';
     import HairColor from '../../templates/configuratorShares/hairColor.svelte';
@@ -38,17 +39,27 @@
     })
 
     async function loadCharacter() {
-        
+        const cookies = cookie.parse(document.cookie);
+        const jwt = cookies['jwt'];
+        const response = await fetch('http://localhost:8000/authorize/character', {
+            method: 'GET',
+            headers: {
+                Authorization: `${jwt}`
+            }
+        });
+        const data = await response.json();
+        console.log(data);
     }
 
     async function saveSetting() {
+        const cookies = cookie.parse(document.cookie);
+        const jwt = cookies['jwt'];
         try {
-            const response = await fetch('http://localhost:8000/api/characterJWT', {
+            const response = await fetch('http://localhost:8000/authorize/character', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify(character)
+                    Authorization: `Bearer ${jwt}`
+                }
             });
             const data = await response.json();
             character = data;
