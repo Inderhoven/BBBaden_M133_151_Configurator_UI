@@ -2,7 +2,6 @@
 
     import { Steps } from 'svelte-steps';
     import { onMount } from 'svelte';
-    import jwt from 'jsonwebtoken';
 
     import Gender from '../../templates/configuratorShares/gender.svelte';
     import HairColor from '../../templates/configuratorShares/hairColor.svelte';

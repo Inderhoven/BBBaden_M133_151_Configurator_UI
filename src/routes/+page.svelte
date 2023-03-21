@@ -3,12 +3,12 @@
   /**
      * @type {string}
      */
-  var sessionUsername
+  var sessionUsername = ""
 
   /**
    * @type {string}
    */
-  var sessionPassword
+  var sessionPassword = ""
 
   async function SessionLogin() {
     var response;
@@ -37,12 +37,12 @@
   /**
    * @type {string}
    */
-  var jwtUsername
+  var jwtUsername = ""
 
   /**
    * @type {string}
    */
-  var jwtPassword
+  var jwtPassword = ""
 
   async function JWTLogin() {
     var response;
@@ -68,6 +68,40 @@
     }
   }
 
+/**
+ * @param {string | null} variable
+ */
+function isNullOrEmpty(variable) {
+  if(variable === null || variable === ""){
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+var sessionFormValid = false;
+
+function validateSessionForm() {
+  if(!isNullOrEmpty(sessionUsername) && !isNullOrEmpty(sessionPassword)){
+    sessionFormValid = true;
+  }
+  else {
+    sessionFormValid = false;
+  }
+}
+
+var jwtFormValid = false;
+
+function validateJWTForm() {
+  if(!isNullOrEmpty(jwtUsername) && !isNullOrEmpty(jwtPassword)){
+    jwtFormValid = true;
+  }
+  else {
+    jwtFormValid = false;
+  }
+}
+
 </script>
 
   <div class="container-fluid">
@@ -80,13 +114,13 @@
           <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
           <div class="formItem">
             <label for="inputSessionUsername" class="sr-only">Username</label>
-            <input bind:value={sessionUsername} type="username" id="inputSessionUsername" class="form-control" placeholder="Username">
+            <input bind:value={sessionUsername} type="username" id="inputSessionUsername" class="form-control" placeholder="Username" required on:input={validateSessionForm}>
           </div>
           <div class="formItem">
             <label for="inputSessionPassword" class="sr-only">Password</label>
-            <input bind:value={sessionPassword} type="password" id="inputSessionPassword" class="form-control" placeholder="Password">
+            <input bind:value={sessionPassword} type="password" id="inputSessionPassword" class="form-control" placeholder="Password" required on:input={validateSessionForm}>
           </div>
-          <button class="btn btn-lg btn-primary btn-block" type="button" on:click={SessionLogin}>Login as Session</button>
+          <button disabled={!sessionFormValid} class="btn btn-lg btn-primary btn-block btn_session" type="button" on:click={SessionLogin}>Login as Session</button>
         </form>
       </div>
       <div class="loginForm">
@@ -94,13 +128,13 @@
           <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
           <div class="formItem">
             <label for="inputJWTUsername" class="sr-only">Username</label>
-            <input bind:value={jwtUsername} type="username" id="inputJWTUsername" class="form-control" placeholder="Username">
+            <input bind:value={jwtUsername} type="username" id="inputJWTUsername" class="form-control" placeholder="Username" required on:input={validateJWTForm}>
           </div>
           <div class="formItem">
             <label for="inputJWTPassword" class="sr-only">Password</label>
-            <input bind:value={jwtPassword} type="password" id="inputJWTPassword" class="form-control" placeholder="Password">
+            <input bind:value={jwtPassword} type="password" id="inputJWTPassword" class="form-control" placeholder="Password" required on:input={validateJWTForm}>
           </div>
-          <button class="btn btn-lg btn-primary btn-block" type="button" on:click={JWTLogin}>Login with JWT</button>
+          <button disabled={!jwtFormValid} class="btn btn-lg btn-primary btn-block" type="button" on:click={JWTLogin}>Login with JWT</button>
         </form> 
       </div>
     </div>
