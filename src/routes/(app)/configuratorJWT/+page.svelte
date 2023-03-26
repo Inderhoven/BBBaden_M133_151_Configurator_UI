@@ -41,14 +41,22 @@
     async function loadCharacter() {
         const cookies = cookie.parse(document.cookie);
         const jwt = cookies['jwt'];
-        const response = await fetch('http://localhost:8000/authorize/character', {
-            method: 'GET',
-            headers: {
-                Authorization: `${jwt}`
+        try {
+            const response = await fetch('http://localhost:8000/authorize/character', {
+                method: 'GET',
+                headers: {
+                    'Content-Type' : 'application/json',
+                    Authorization: `${jwt}`
+                }
+            });
+            const data = await response.json();
+            
+            if(!data.message) {
+                character = data;
             }
-        });
-        const data = await response.json();
-        console.log(data);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     async function saveSetting() {
@@ -58,12 +66,13 @@
             const response = await fetch('http://localhost:8000/authorize/character', {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${jwt}`
-                }
+                    'Content-Type' : 'application/json',
+                    Authorization: `${jwt}`
+                },
+                body: JSON.stringify(character)
             });
             const data = await response.json();
             character = data;
-            // console.log('Character POST:',character);
         } catch (e) {
             console.log(e);
         }
