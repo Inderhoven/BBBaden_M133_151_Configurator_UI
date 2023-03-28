@@ -2,6 +2,7 @@
 
     import { Steps } from 'svelte-steps';
     import { onMount } from 'svelte';
+    import { goto } from '$app/navigation'
     import cookie from 'cookie';
 
     import Gender from '../../templates/configuratorShares/gender.svelte';
@@ -42,7 +43,7 @@
         const cookies = cookie.parse(document.cookie);
         const jwt = cookies['jwt'];
         try {
-            const response = await fetch('http://localhost:8000/authorize/character', {
+            const response = await fetch('http://127.0.0.1:8000/authorize/character', {
                 method: 'GET',
                 headers: {
                     'Content-Type' : 'application/json',
@@ -63,7 +64,7 @@
         const cookies = cookie.parse(document.cookie);
         const jwt = cookies['jwt'];
         try {
-            const response = await fetch('http://localhost:8000/authorize/character', {
+            const response = await fetch('http://127.0.0.1:8000/authorize/character', {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json',

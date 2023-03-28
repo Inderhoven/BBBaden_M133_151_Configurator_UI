@@ -39,7 +39,7 @@
 
     async function loadCharacter() {
         try {
-            const response = await fetch('http://localhost:8000/api/characterSession', {
+            const response = await fetch('http://127.0.0.1:8000/api/characterSession', {
                 method : 'GET',
                 headers: { 'Content-Type' : 'application/json' },
                 credentials: 'include'
@@ -55,7 +55,7 @@
 
     async function saveSetting() {
         try {
-            const response = await fetch('http://localhost:8000/api/characterSession', {
+            const response = await fetch('http://127.0.0.1:8000/api/characterSession', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json' },
