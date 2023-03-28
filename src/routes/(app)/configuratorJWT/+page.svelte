@@ -2,7 +2,6 @@
 
     import { Steps } from 'svelte-steps';
     import { onMount } from 'svelte';
-    import { goto } from '$app/navigation'
     import cookie from 'cookie';
 
     import Gender from '../../templates/configuratorShares/gender.svelte';
@@ -42,6 +41,7 @@
     async function loadCharacter() {
         const cookies = cookie.parse(document.cookie);
         const jwt = cookies['jwt'];
+        // console.log("Cookie JWT: ",jwt);
         try {
             const response = await fetch('http://127.0.0.1:8000/authorize/character', {
                 method: 'GET',
@@ -63,6 +63,7 @@
     async function saveSetting() {
         const cookies = cookie.parse(document.cookie);
         const jwt = cookies['jwt'];
+        // console.log("JWT Token", jwt);
         try {
             const response = await fetch('http://127.0.0.1:8000/authorize/character', {
                 method: 'POST',

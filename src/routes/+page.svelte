@@ -13,7 +13,7 @@
   async function SessionLogin() {
     var response;
     try{
-      response = await fetch('http://localhost:8000/api/loginSession', {
+      response = await fetch('http://127.0.0.1:8000/api/loginSession', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json' },
@@ -47,7 +47,7 @@
   async function JWTLogin() {
     var response;
     try{
-      response = await fetch('http://localhost:8000/authenticate/login', {
+      response = await fetch('http://127.0.0.1:8000/authenticate/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json' },

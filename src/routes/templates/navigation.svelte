@@ -14,7 +14,7 @@
   }
 
   async function logoutSession() {
-    await fetch('http://localhost:8000/api/logoutSession', {
+    await fetch('http://127.0.0.1:8000/api/logoutSession', {
       method: 'POST',
       credentials: 'include'
     });
@@ -22,7 +22,7 @@
   }
 
   async function logoutJWT() {
-    await fetch('http://localhost:8000/authenticate/logout', {
+    await fetch('http://127.0.0.1:8000/authenticate/logout', {
       method: 'POST',
       credentials: 'include'
     });
@@ -32,7 +32,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="http://localhost:5173/configuratorSession">Configurator</a>
+      <a class="navbar-brand" href="http://127.0.0.1:5173/configuratorSession">Configurator</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -42,7 +42,7 @@
             <a class="nav-link active" aria-current="page" href="http://localhost:5173">Home</a>
           </li> -->
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="http://localhost:5173/configuratorSession">Configurator</a>
+            <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5173/configuratorSession">Configurator</a>
           </li>
         </ul>
       </div>

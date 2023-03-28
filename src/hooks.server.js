@@ -23,16 +23,22 @@ export const handle = async ({event, resolve}) => {
 
 // @ts-ignore
 async function checkAccess(event, sessionCookie, jwtCookie){
+    const accessSession = event.cookies.get('sessionid');
+
     let access = false;
     if(isNullOrEmpty(sessionCookie) && isNullOrEmpty(jwtCookie)){
         access =  false;
     }
+    // else{
+    //     access = true;
+    // }
     if(!isNullOrEmpty(sessionCookie)){
         try{
             const response = await fetch('http://127.0.0.1:8000/api/user', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
+            headers: {
+                Cookie: `sessionid=${accessSession}`
+            },
         });
         console.log("Session Response:", response.status)
         if(response.status === 200){
@@ -57,19 +63,23 @@ async function checkAccess(event, sessionCookie, jwtCookie){
             }
             else if (response.status === 401) {
                 const refreshToken = event.cookies.get('refresh_token');
+                event.cookies.set('jwt', '', {
+                    expires: new Date(0)
+                });
                 console.log("RefreshToken: ",refreshToken);
                 if (refreshToken) {
                     const refreshResponse = await fetch('http://127.0.0.1:8000/authorize/refresh', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        credentials: 'include'
+                            Cookie: `refresh_token=${refreshToken}`
+                        }
                         });
-
+                    const cookies = refreshResponse.headers.get('set-cookie');
+                    const match = cookies?.match(/jwt=([^;]*)/);
+                    const access_token = match ? match[1] : null;
+                    console.log("Token: ", access_token)
                     if (refreshResponse.status === 200) {
-                        const { access_token } = await refreshResponse.json();
-                        event.cookies.set('jwt', access_token);
+                        event.cookies.set('jwt', access_token, { httpOnly: false, secure: false });
                         access = true;
                     }
                 }
